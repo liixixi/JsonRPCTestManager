@@ -29,4 +29,9 @@ export class MenuComponent implements OnInit {
   {
     this.executionService.Execute();
   }
+
+  OnConnect()
+  {
+    this.executionService.Connect();
+  }
 }

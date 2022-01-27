@@ -38,4 +38,6 @@
   .item-6 {
     background-color: #6413e7;
     height: 2em;
+    max-height: 2em;
+    scroll-behavior: auto;
   }

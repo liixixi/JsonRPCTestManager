@@ -7,18 +7,55 @@ import * as babelParser from "@babel/types"
   providedIn: 'root'
 })
 export class ExecutionService {
+
+  parameters : { name: string; value: string|undefined; }[] = [];
+
+  applyParameters(parameters: { name: string; value: string|undefined; }[]) {
+    this.parameters = parameters;
+  }
+
+  connectionString:string = "";
+  SetConnectionString(connectionString:string)
+  {
+    this.connectionString = connectionString;
+  }
+
+  Connect()
+  {
+    this.outputService.Output("connect to " + this.connectionString);
+  }
+
   Execute() {
     if (this.interfaceSelection.methodSelected == undefined)
     {
       this.outputService.Output("no method selected");
       return;
     }
-
     
-    this.outputService.Output("method " +
+   
+      var output = "method " +
     this.interfaceSelection.interfaceSelected?.name + '.' + 
     (this.interfaceSelection.methodSelected?.key as babelParser.Identifier)?.name
-    + " called");
+    + '(';
+    
+    var isFirstParameter = true;
+    for (var p in this.parameters)
+    {
+      if (isFirstParameter == false)
+      {
+        output += ', '
+      }
+
+      output += this.parameters[p].value;
+
+      if (isFirstParameter != false)
+        isFirstParameter = false;
+    }
+
+    output += ')'
+    + " called";
+
+    this.outputService.Output(output);
   }
 
   constructor(private interfaceSelection:InterfaceSelectionService,

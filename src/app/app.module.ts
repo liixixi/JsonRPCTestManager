@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatListModule} from '@angular/material/list';
 import { OutputComponent } from './output/output.component';
 import { ParametersComponent } from './parameters/parameters.component';
+import { ConnectionPathComponent } from './connection-path/connection-path.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,6 +19,7 @@ import { ParametersComponent } from './parameters/parameters.component';
     FunctionViewerComponent,
     OutputComponent,
     ParametersComponent,
+    ConnectionPathComponent,
     
   ],
   imports: [
