@@ -56,10 +56,21 @@ export class ExecutionService {
     + " called";
 
     this.outputService.Output(output);
+
+    this.rpc((this.interfaceSelection.methodSelected?.key as babelParser.Identifier)?.name).then( value => {
+      this.outputService.Output("return" + value);
+    })
   }
 
   constructor(private interfaceSelection:InterfaceSelectionService,
     private outputService:OutputService) { }
 
+  rpc(method:string, ...params:any[]) : Promise<any>
+  {
+    
 
+    return new Promise( (resolve, reject) => {
+      resolve(1);
+    });
+  }
 }

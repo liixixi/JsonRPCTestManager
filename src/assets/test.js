@@ -1,0 +1,1 @@
+function init() { console.log('init') } function call() { console.log('call') } { init: init; call: call }
