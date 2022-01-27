@@ -1,0 +1,5 @@
+<div *ngFor = "let p of parameters">
+    <p>{{p.name}}</p>
+    <input #box (keyup)="p.value = box.value">
+    <p>{{p.value}}</p>
+</div>

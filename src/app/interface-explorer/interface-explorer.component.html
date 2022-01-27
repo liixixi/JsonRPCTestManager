@@ -1,0 +1,11 @@
+<mat-action-list *ngFor = "let i of interfaces">
+    <button mat-list-item > {{i.name}} </button>
+    <mat-action-list *ngFor = "let f of i.methods" >
+        <button class="Methods" 
+            *ngIf = "f.key.type == 'Identifier'" 
+            (click)="OnMethodSelected(i,f)"
+            mat-list-item> 
+                {{f.key.name}}
+        </button>
+    </mat-action-list>
+</mat-action-list>

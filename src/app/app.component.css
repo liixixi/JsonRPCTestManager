@@ -1,0 +1,41 @@
+.container {
+    
+  }
+  
+  .item {
+    border-radius: .2em;
+    color: #ffffff;
+    font-family: sans-serif;
+    font-size: 1em;
+    margin: 1px;
+    text-transform: uppercase;
+  }
+  
+  .item-1 {
+    background-color: #009169;
+    height: 90vh;
+  }
+  
+  .item-2 {
+    background-color: #55b296;
+  }
+  
+  .item-3 {
+    background-color: #9fd3c3;
+    height: 100%;
+  }
+  
+  .item-4 {
+    background-color: #e7b013;
+    height: 20em;
+  }
+  
+  .item-5 {
+    background-color: #073443;
+    height: 20em;
+  }
+
+  .item-6 {
+    background-color: #6413e7;
+    height: 2em;
+  }
