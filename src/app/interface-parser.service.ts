@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { InterfaceDefination } from './interface-defination';
 import * as babelParser from '@babel/parser'
+import * as babelType from "@babel/types"
 @Injectable({
   providedIn: 'root'
 })
@@ -18,9 +19,10 @@ export class InterfaceParserService {
     console.log(ret);
     var interfaces : InterfaceDefination[]  = [];
     ret.program.body.forEach( i => {
-      if (i.type == 'TSInterfaceDeclaration')
+      
+      if (i.type == 'ExportNamedDeclaration' && i.declaration)
       {
-        var interfaceDefination = new InterfaceDefination(i);
+        var interfaceDefination = new InterfaceDefination(i.declaration as babelType.TSInterfaceDeclaration);
         interfaces.push(interfaceDefination);
       }
     } )

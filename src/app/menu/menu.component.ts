@@ -22,7 +22,21 @@ export class MenuComponent implements OnInit {
   on_MenuOpen()
   {
     var input = "interface test{ f1(a:number):Promise<number>; f3(a:number, b:number,c:string):Promise<{a:number, b:string}>; f2(a:number, b:string):Promise<string>; a:number;};";
-    this.solutionService.Add(input);
+    document.querySelector('input')?.click();
+    
+
+    
+  }
+
+  OpenFile(e:any)
+  {
+    const reader = new FileReader();
+    reader.onload = (e:ProgressEvent<FileReader>) => {
+      if (e.target?.result)
+        this.solutionService.Add(e.target?.result as string);
+    }
+
+    reader.readAsText(e?.target.files[0]);
   }
 
   OnRun()

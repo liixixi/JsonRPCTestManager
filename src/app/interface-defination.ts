@@ -1,11 +1,11 @@
-import * as babelParser from "@babel/types"
+import * as babelType from "@babel/types"
 export class InterfaceDefination
 {
   name: string = "";
-  declaration: babelParser.TSInterfaceDeclaration;
-  methods:babelParser.TSMethodSignature[] = [];
+  declaration: babelType.TSInterfaceDeclaration;
+  methods:babelType.TSMethodSignature[] = [];
 
-  constructor(declaration: babelParser.TSInterfaceDeclaration)
+  constructor(declaration: babelType.TSInterfaceDeclaration)
   {
       this.declaration = declaration;
       this.name = this.declaration.id.name;

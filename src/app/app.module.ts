@@ -11,6 +11,8 @@ import {MatListModule} from '@angular/material/list';
 import { OutputComponent } from './output/output.component';
 import { ParametersComponent } from './parameters/parameters.component';
 import { ConnectionPathComponent } from './connection-path/connection-path.component';
+import {MatTreeModule} from '@angular/material/tree';
+import {MatIconModule} from '@angular/material/icon'
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +28,9 @@ import { ConnectionPathComponent } from './connection-path/connection-path.compo
     BrowserModule,
     FlexLayoutModule,
     BrowserAnimationsModule,
-    MatListModule
+    MatListModule,
+    MatTreeModule,
+    MatIconModule
     
   ],
   providers: [],
