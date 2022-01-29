@@ -23,7 +23,13 @@ export class InterfaceParserService {
       if (i.type == 'ExportNamedDeclaration' && i.declaration)
       {
         var interfaceDefination = new InterfaceDefination(i.declaration as babelType.TSInterfaceDeclaration);
-        interfaces.push(interfaceDefination);
+        var hasMethod:boolean = false;
+        interfaceDefination.declaration.body.body.forEach(j =>{
+          if(!hasMethod && j.type == 'TSMethodSignature'){
+            interfaces.push(interfaceDefination);
+            hasMethod = true;
+          }
+        })
       }
     } )
     return interfaces;
