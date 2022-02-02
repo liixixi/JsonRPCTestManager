@@ -29,11 +29,8 @@ export class FunctionViewerComponent implements OnInit {
           this.functionContent += ', '
 
         this.functionContent += (p as babelParser.Identifier)?.name;
-        this.functionContent += ' : '
-        this.functionContent += 
-          (p.typeAnnotation as babelParser.TSTypeAnnotation)?.typeAnnotation.type == "TSNumberKeyword" ? 'number'
-          :(p.typeAnnotation as babelParser.TSTypeAnnotation)?.typeAnnotation.type == "TSStringKeyword" ? 'string'
-          : '';
+        this.functionContent += ' : ';
+        this.functionContent += this.fetchTypeValue((p.typeAnnotation as babelParser.TSTypeAnnotation)?.typeAnnotation);
 
           if (firstParameter != false)
           firstParameter = false;
@@ -45,7 +42,7 @@ export class FunctionViewerComponent implements OnInit {
         (((f.typeAnnotation as babelParser.TSTypeAnnotation)?.typeAnnotation as babelParser.TSTypeReference)?.typeName as babelParser.Identifier).name: "";
       this.functionContent += '<';
       ((f.typeAnnotation as babelParser.TSTypeAnnotation)?.typeAnnotation as babelParser.TSTypeReference)?.typeParameters?.params.forEach(t => {
-        this.functionContent += t.type == "TSStringKeyword" ? "string" : '';
+        this.functionContent += this.fetchTypeValue(t);
       });
 
       this.functionContent += '>';
@@ -55,6 +52,30 @@ export class FunctionViewerComponent implements OnInit {
    }
 
   ngOnInit(): void {
+  }
+
+  fetchTypeValue(type:babelParser.TSType): string {
+    switch(type.type){
+      case "TSNumberKeyword": return 'number';
+      case "TSAnyKeyword": return 'any';
+      case "TSBooleanKeyword": return 'boolean';
+      case "TSStringKeyword": return 'string';
+      case "TSTypeReference": return type.typeParameters? this.fetchMapTypeValue(type as babelParser.TSTypeReference):(type.typeName as babelParser.Identifier).name;
+      case "TSArrayType": return this.fetchTypeValue(type.elementType)+'[ ]';
+      default: return '';
+    }
+  }
+
+  fetchMapTypeValue(type: babelParser.TSTypeReference): string {
+    var param0: boolean = true;
+    var mapTypeValue = (type.typeName as babelParser.Identifier).name + '<';
+    type.typeParameters?.params.forEach(p => {
+        if(!param0) mapTypeValue += ',';
+        mapTypeValue += this.fetchTypeValue(p);
+        if(param0) param0 = false;
+      });
+    mapTypeValue += '>';
+    return mapTypeValue;
   }
 
   functionContent = "";
