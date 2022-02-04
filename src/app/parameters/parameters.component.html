@@ -1,4 +1,12 @@
-<div *ngFor = "let p of parameters">
-    <p>{{p.name}}</p>
-    <input #box (keyup)="p.value = box.value; OnUpdate()">
-</div>
+<ng-container *ngFor="let p of parameters">
+    <div *ngIf="p.value; else elseBlock">
+        <p>{{p.name}}</p>
+        <input value="{{p.value}}" #box (keyup)="p.value = box.value; OnUpdate()">
+    </div>
+    <ng-template #elseBlock>
+        <div>
+            <p>{{p.name}}</p>
+            <input #box (keyup)="p.value = box.value; OnUpdate()">
+        </div>
+    </ng-template>
+</ng-container>

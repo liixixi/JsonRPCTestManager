@@ -33,6 +33,7 @@
   .item-5 {
     background-color: #073443;
     height: 20em;
+    overflow: auto;
   }
 
   .item-6 {

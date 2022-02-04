@@ -20,6 +20,9 @@ export class ParametersComponent implements OnInit {
 
       this.executionService.applyParameters(this.parameters);
     })
+    executionService.subjectParamValue.subscribe(p=>{
+      this.parameters = p;
+    })
    }
 
   ngOnInit(): void {

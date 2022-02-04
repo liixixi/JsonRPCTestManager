@@ -57,4 +57,8 @@ export class MenuComponent implements OnInit {
     connector.init();
     connector.call();
   }
+
+  onAutoTest(){
+    this.executionService.autoTest();
+  }
 }
