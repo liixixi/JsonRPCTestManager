@@ -9,9 +9,9 @@ import { Subject } from 'rxjs';
 })
 export class ExecutionService {
 
-  parameters : { name: string; value: string|undefined; }[] = [];
+  parameters : { name: string; value: string|undefined; isArray:boolean|undefined;}[] = [];
 
-  applyParameters(parameters: { name: string; value: string|undefined; }[]) {
+  applyParameters(parameters: { name: string; value: string|undefined; isArray:boolean|undefined;}[]) {
     this.parameters = parameters;
   }
 
@@ -64,29 +64,43 @@ export class ExecutionService {
   }
 
   autoTest(){
-    //Demo: only works for pcdc.interface\getProductLifecycle
+    //Demo: only works for pcdc.interface
     
-    //plan A: 
-    // const catalogNumbers:string[] = ['1756-IB16','1756-L71','1715-AENTR','1769-L36ERM','1756-L85E'];
-    // const autoTestValue:string[]=this.randomString(catalogNumbers);
+    var data: {[index:string]:string[]} = {
+      'catalogNumbers':['1756-IB16','1756-L71','1715-AENTR','1769-L36ERM','1756-L85E'],
+      'productName':['1756-IB16','1756-L71','1715-AENTR','1769-L36ERM','1756-L85E'],
+      'includeDescInSearch':['true','false'],
+      'limitSearchToCipProducts':['true','false'],
+      'productIds':['1756-IB16','1756-L71','1715-AENTR','1769-L36ERM','1756-L85E'],
+      'versionIds':['1756-IB16','1756-L71','1715-AENTR','1769-L36ERM','1756-L85E'],
+      'sdrsIDs':[''],
+      'language':[''],
+      'sessionID': [''],
+      'eulaAcceptance': ['true','false'],
+      'eulaAnswers':['']
+    };
+    var autoTestValue:string|string[];
+    var randomCount:number=1;
 
-    //plan B:
-    const base: string='0123456789-qwertyuiopasdfghjklzxcvbnm';
-    var autoTestValue: string[]=[];
-    for(var i=0;i<Math.round(Math.random()*10);i++){
-      const catalogNumber:string=this.randomString(base).join('');
-      autoTestValue.push(catalogNumber);
+    for(var p in this.parameters){
+      if(this.parameters[p].isArray){
+        randomCount= Math.round(Math.random()*data[this.parameters[p].name].length);
+      }
+      autoTestValue=this.randomString(data[this.parameters[p].name],randomCount);
+      if(this.parameters[p].isArray){
+        this.parameters[p].value = '['+autoTestValue.toString()+']';
+      }
+      else{
+        this.parameters[p].value = autoTestValue.toString();
+      }
     }
-
-    this.parameters[0].value = '['+autoTestValue.toString()+']';
     this.subjectParamValue.next(this.parameters);
     this.Execute();
   }
 
-  public subjectParamValue = new Subject<{ name: string; value: string|undefined; }[]>();
+  public subjectParamValue = new Subject<{ name: string; value: string|undefined; isArray:boolean|undefined; }[]>();
 
-  randomString(baseString:string|string[]):string[]{
-    const randomCount:number = Math.round(Math.random()*baseString.length);
+  randomString(baseString:string|string[],randomCount:number):string[]{
     var result: string[]=[];
     if(randomCount>0){
       for(var i =0;i<randomCount;i++){

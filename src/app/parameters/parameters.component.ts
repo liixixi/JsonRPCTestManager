@@ -15,7 +15,7 @@ export class ParametersComponent implements OnInit {
       this.parameters = [];
       
       f.parameters.forEach (p => {
-        this.parameters.push({ name: (p as babelParser.Identifier)?.name, value:undefined});
+        this.parameters.push({ name: (p as babelParser.Identifier)?.name, value:undefined, isArray:this.isArray((p.typeAnnotation as babelParser.TSTypeAnnotation)?.typeAnnotation)});
       })
 
       this.executionService.applyParameters(this.parameters);
@@ -28,10 +28,18 @@ export class ParametersComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  parameters : {name:string, value:string|undefined}[] = [];
+  parameters : {name:string, value:string|undefined, isArray:boolean|undefined}[] = [];
 
   OnUpdate()
   {
     this.executionService.applyParameters(this.parameters);
   }
+
+  isArray(type:babelParser.TSType): boolean {
+    switch(type.type){
+      case "TSArrayType": return true;
+      default: return false;
+    }
+  }
+
 }
